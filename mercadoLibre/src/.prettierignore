@@ -1,0 +1,30 @@
+# Ignorar dependencias instaladas
+node_modules/
+
+# Build y archivos generados
+build/
+dist/
+coverage/
+
+# Archivos de configuración y de entorno
+.env
+.env.development
+.env.production
+.env.test
+
+# Archivos de theme MUI V5
+src/utils/themeMUI.js
+
+# Archivos específicos que no necesitas formatear
+package-lock.json
+
+# Ignorar las configuraciones de ESLint y Prettier generadas
+.eslintcache
+.prettierignore
+.prettierrc*
+
+# Ignorar archivos estáticos específicos
+public/static/
+public/*.ico
+public/*.png
+public/manifest.json
