@@ -1,0 +1,85 @@
+/* ===============================
+   🔄 Reset & Baseline
+   =============================== */
+
+/* 1. Reset de box-model y márgenes/paddings */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 2. Elimina estilos predeterminados en inputs, botones, etc */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+/* 3. Tipografía base del proyecto */
+body {
+  font-family: 'Proxima Nova', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.55);
+  background-color: #ebebeb;
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 4. Mejora accesibilidad en enlaces */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 5. Mejora de imágenes responsivas */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 6. Listas sin estilo por defecto */
+ul,
+ol {
+  list-style: none;
+}
+
+/* 7. Botones sin estilo nativo */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* 8. Inputs sin flechas en number (opcional) */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none; 
+  margin: 0;
+}
+input[type='number'] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+/* 9. Base para containers */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}

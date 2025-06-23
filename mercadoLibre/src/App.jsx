@@ -1,16 +1,17 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Header from './components/header/header';
+import Pagination from './components/pagination/pagination';
 
+/**
+ * Main application component
+ * @returns {JSX.Element}
+ */
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-     HOLA MUNDO
-    </>
-  )
+	return (
+		<>
+			<Header />
+			<Pagination />
+		</>
+	);
 }
 
-export default App
+export default App;

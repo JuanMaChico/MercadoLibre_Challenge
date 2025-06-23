@@ -12,9 +12,6 @@ coverage/
 .env.production
 .env.test
 
-# Archivos de theme MUI V5
-src/utils/themeMUI.js
-
 # Archivos específicos que no necesitas formatear
 package-lock.json
 

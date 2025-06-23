@@ -1,0 +1,29 @@
+@use 'abstracts/variables' as variables;
+@use 'base/typography';
+@use 'components/header';
+@use 'components/pagination';
+// @use 'layout/grid';
+@use 'base/reset';
+
+// Tipografía Proxima Nova
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('../assets/fonts/proximaNova/proximanova_regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('../assets/fonts/proximaNova/proximanova_bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: typography.$font-primary;
+  font-size: typography.$font-size-base;
+  background-color: variables.$background-page;
+}
