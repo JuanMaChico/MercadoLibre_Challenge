@@ -1,0 +1,93 @@
+@use '../abstracts/variables' as variables;
+@use '../base/typography' as typography;
+
+.card {
+	display: flex;
+	width: 1200px;
+	padding: 12px;
+	padding-bottom: 20px;
+	background-color: variables.$background-pagination-active;
+	border-bottom: 1px solid #e0e0e0;
+	box-sizing: border-box;
+
+	&__image-wrapper {
+		width: 259px;
+		height: 250px;
+		flex-shrink: 0;
+		margin-right: 24px;
+		// padding-bottom: 20px;
+	}
+
+	&__image {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+	}
+
+	&__info {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	&__title {
+		font-family: typography.$font-primary, sans-serif;
+		font-size: typography.$font-size-title;
+		font-weight: typography.$font-weight-title;
+		color: variables.$color-pagination-text;
+		margin-bottom: 6px;
+	}
+
+	&__seller {
+		font-family: typography.$font-primary, sans-serif;
+		font-size: typography.$font-size-subtitle;
+		font-weight: typography.$font-weight-regular;
+		color: variables.$color-text-search;
+		font-size: typography.$font-size-subtitle;
+		margin-bottom: 25px;
+	}
+
+	&__price-section {
+		margin-bottom: 25px;
+	}
+
+	&__price-wrapper {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+
+	&__price {
+		display: block;
+		font-size: typography.$font-size-price;
+		font-weight: typography.$font-weight-regular;
+		color: variables.$color-pagination-text;
+		margin-right: 14px;
+	}
+	&__price-off {
+		display: block;
+		font-size: typography.$font-size-price-off;
+		font-weight: typography.$font-weight-regular;
+		color: variables.$color-text-search;
+		text-decoration: line-through;
+		margin-bottom: 6px;
+	}
+
+	&__discount {
+		font-size: typography.$font-size-subtitle;
+		color: variables.$color-text-secondary;
+		align-items: center;
+	}
+
+	&__installments {
+		font-size: typography.$font-size-subtitle;
+		color: variables.$color-text-secondary;
+	}
+
+	&__shipping {
+		font-size: typography.$font-size-subtitle;
+		color: variables.$color-text-secondary;
+		font-weight: typography.$font-weight-semibold;
+	}
+}
