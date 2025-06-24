@@ -9,13 +9,13 @@
 	background-color: variables.$background-pagination-active;
 	border-bottom: 1px solid #e0e0e0;
 	box-sizing: border-box;
+	cursor: 'pointer';
 
 	&__image-wrapper {
 		width: 259px;
 		height: 250px;
 		flex-shrink: 0;
 		margin-right: 24px;
-		// padding-bottom: 20px;
 	}
 
 	&__image {

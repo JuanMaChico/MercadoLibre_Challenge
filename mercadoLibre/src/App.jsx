@@ -1,5 +1,5 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/header/header';
-import Pagination from './components/pagination/pagination';
 import Container from './components/container/container';
 import ProductDetail from './components/detail/detail';
 /**
@@ -8,12 +8,14 @@ import ProductDetail from './components/detail/detail';
  */
 function App() {
 	return (
-		<>
+		<BrowserRouter>
 			<Header />
-			{/* <Container /> */}
-			<ProductDetail />
-			<Pagination />
-		</>
+			<Routes>
+				<Route path='/' element={<></>} />
+				<Route path='/items' element={<Container />} />
+				<Route path='/items/:id' element={<ProductDetail />} />
+			</Routes>
+		</BrowserRouter>
 	);
 }
 
