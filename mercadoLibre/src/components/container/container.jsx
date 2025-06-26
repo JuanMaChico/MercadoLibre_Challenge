@@ -1,7 +1,7 @@
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import Card from '../card/card';
 import Pagination from '../pagination/pagination';
-import zapatillasData from '../../../Mocks/zapatilhas/search-MLA-zapatillas.json';
+import zapatillasData from '../../../../Mocks/zapatillas/search-MLA-zapatillas.json';
 
 const Container = () => {
 	const navigate = useNavigate();

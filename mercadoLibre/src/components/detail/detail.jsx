@@ -33,7 +33,7 @@ const Detail = () => {
 			{/* Navegación superior */}
 			<div className='product-detail__breadcrumb'>
 				<div className='product-detail__breadcrumb-navigation'>
-					<a href='#'>Volver al listado</a>
+					<a href='/'>Volver al listado</a>
 					<span>|</span>
 					<span>Celulares y Teléfonos</span> &gt;
 					<span>Celulares y Smartphones</span> &gt;

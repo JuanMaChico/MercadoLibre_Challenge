@@ -1,20 +1,28 @@
-const Pagination = () => {
+const Pagination = ({ totalPages = 1, currentPage = 1, onPageChange }) => {
 	return (
 		<footer className='pagination'>
 			<ul className='pagination__list'>
-				{Array.from({ length: 10 }, (_, i) => (
+				{Array.from({ length: totalPages }, (_, i) => (
 					<li key={i + 1}>
 						<button
 							className={`pagination__item ${
-								i === 0 ? 'pagination__item--active' : ''
+								currentPage === i + 1 ? 'pagination__item--active' : ''
 							}`}
+							onClick={() => onPageChange(i + 1)}
+							disabled={currentPage === i + 1}
 						>
 							{i + 1}
 						</button>
 					</li>
 				))}
 				<li>
-					<button className='pagination__next'>Siguiente &gt;</button>
+					<button
+						className='pagination__next'
+						onClick={() => onPageChange(currentPage + 1)}
+						disabled={currentPage === totalPages}
+					>
+						Siguiente &gt;
+					</button>
 				</li>
 			</ul>
 		</footer>

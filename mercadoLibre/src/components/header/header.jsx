@@ -1,22 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import WelcomeMessage from '../welcomeMessage/welcomeMessage';
 /**
- *
+ *	Header component
  * @returns {JSX.Element}
  */
 const Header = () => {
-	const [search, setSearch] = useState('');
 	const navigate = useNavigate();
-
+	const [search, setSearch] = useState('');
 	const handleInputChange = (e) => setSearch(e.target.value);
-
 	const handleSearch = (e) => {
 		e.preventDefault();
 		if (search.trim()) {
 			navigate(`/items?search=${encodeURIComponent(search)}`);
 		}
 	};
+	const [showWelcome, setShowWelcome] = useState(false);
+
+	useEffect(() => {
+		const hasVisited = localStorage.getItem('hasVisited');
+		if (!hasVisited) {
+			setShowWelcome(true);
+			localStorage.setItem('hasVisited', 'true');
+		}
+	}, []);
 
 	return (
 		<header className='header'>
@@ -25,6 +32,7 @@ const Header = () => {
 					src='/logo_large_25years@2x.png'
 					alt='Mercado Libre logo'
 					className='header__logo'
+					onClick={() => navigate('/')}
 				/>
 				<form className='header__search-wrapper' onSubmit={handleSearch}>
 					<input
@@ -42,6 +50,9 @@ const Header = () => {
 						/>
 					</button>
 				</form>
+				<div style={{ position: 'relative' }}>
+					{showWelcome && <WelcomeMessage onClose={() => setShowWelcome(false)} />}
+				</div>
 			</div>
 		</header>
 	);
