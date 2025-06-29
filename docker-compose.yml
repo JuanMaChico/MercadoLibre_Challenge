@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # Backend API
+  backend:
+    build:
+      context: ./mercadoLibre-backend
+      dockerfile: Dockerfile
+    container_name: mercadolibre-backend
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./Mocks:/app/Mocks:ro
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - mercadolibre-network
+
+  # Frontend React
+  frontend:
+    build:
+      context: ./mercadoLibre
+      dockerfile: Dockerfile
+    container_name: mercadolibre-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    environment:
+      - REACT_APP_API_URL=http://localhost:3001
+    restart: unless-stopped
+    networks:
+      - mercadolibre-network
+
+networks:
+  mercadolibre-network:
+    driver: bridge
+
+volumes:
+  mocks-data: 

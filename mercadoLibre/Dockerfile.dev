@@ -1,0 +1,23 @@
+# Usar la imagen oficial de Node.js
+FROM node:20-alpine
+
+# Actualizar paquetes del sistema y limpiar caché
+RUN apk update && apk upgrade && rm -rf /var/cache/apk/*
+
+# Establecer el directorio de trabajo
+WORKDIR /app
+
+# Copiar los archivos de dependencias
+COPY package*.json ./
+
+# Instalar todas las dependencias (incluyendo devDependencies)
+RUN npm install
+
+# Copiar el código fuente
+COPY . .
+
+# Exponer el puerto de desarrollo de Vite
+EXPOSE 3000
+
+# Comando para ejecutar en modo desarrollo
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"] 

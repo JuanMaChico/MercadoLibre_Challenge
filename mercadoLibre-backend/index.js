@@ -10,7 +10,7 @@ app.use(cors());
 // Función para buscar en los archivos JSON de Mocks
 const searchInMocks = async (searchTerm) => {
 	try {
-		const mocksPath = path.join(__dirname, '..', 'Mocks');
+		const mocksPath = path.join(__dirname, 'Mocks');
 		const categories = await fs.readdir(mocksPath);
 		const results = [];
 
@@ -119,7 +119,7 @@ app.get('/api/item/:id', async (req, res) => {
 			});
 		}
 
-		const mocksPath = path.join(__dirname, '..', 'Mocks');
+		const mocksPath = path.join(__dirname, 'Mocks');
 		const categories = await fs.readdir(mocksPath);
 		let itemData = null;
 
@@ -169,7 +169,7 @@ app.get('/api/item/:id/description', async (req, res) => {
 			});
 		}
 
-		const mocksPath = path.join(__dirname, '..', 'Mocks');
+		const mocksPath = path.join(__dirname, 'Mocks');
 		const categories = await fs.readdir(mocksPath);
 		let descriptionData = null;
 
@@ -221,7 +221,7 @@ app.get('/api/item/:id/category', async (req, res) => {
 			});
 		}
 
-		const mocksPath = path.join(__dirname, '..', 'Mocks');
+		const mocksPath = path.join(__dirname, 'Mocks');
 		const categories = await fs.readdir(mocksPath);
 		let categoryData = null;
 
