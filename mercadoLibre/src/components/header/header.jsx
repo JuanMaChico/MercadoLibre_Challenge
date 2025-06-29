@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import WelcomeMessage from '../welcomeMessage/welcomeMessage';
 /**
  *	Header component
@@ -7,15 +7,30 @@ import WelcomeMessage from '../welcomeMessage/welcomeMessage';
  */
 const Header = () => {
 	const navigate = useNavigate();
+	const [searchParams] = useSearchParams();
 	const [search, setSearch] = useState('');
+	const [showWelcome, setShowWelcome] = useState(false);
+
 	const handleInputChange = (e) => setSearch(e.target.value);
+
 	const handleSearch = (e) => {
 		e.preventDefault();
 		if (search.trim()) {
 			navigate(`/items?search=${encodeURIComponent(search)}`);
 		}
 	};
-	const [showWelcome, setShowWelcome] = useState(false);
+
+	// Cargar la búsqueda anterior del localStorage o de la URL
+	useEffect(() => {
+		const urlSearch = searchParams.get('search');
+		const lastSearch = localStorage.getItem('lastSearch');
+
+		if (urlSearch) {
+			setSearch(urlSearch);
+		} else if (lastSearch) {
+			setSearch(lastSearch);
+		}
+	}, [searchParams]);
 
 	useEffect(() => {
 		const hasVisited = localStorage.getItem('hasVisited');
@@ -32,7 +47,10 @@ const Header = () => {
 					src='/logo_large_25years@2x.png'
 					alt='Mercado Libre logo'
 					className='header__logo'
-					onClick={() => navigate('/')}
+					onClick={() => {
+						setSearch('');
+						navigate('/');
+					}}
 				/>
 				<form className='header__search-wrapper' onSubmit={handleSearch}>
 					<input

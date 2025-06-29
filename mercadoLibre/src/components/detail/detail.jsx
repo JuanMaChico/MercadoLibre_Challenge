@@ -1,49 +1,153 @@
+import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
 const Detail = () => {
-	const product = {
-		title: 'Apple iPhone 14 Pro Max 256GB Doble SIM - Dorado',
-		seller: 'Apple Store',
-		price: 299999,
-		installment: 33333,
-		color: 'Dorado',
-		description:
-			'El iPhone 14 Pro Max cuenta con una pantalla Super Retina XDR de 6.7 pulgadas, chip A16 Bionic, y un sistema de cámaras avanzado para fotos y videos impresionantes.',
-		mainImage: 'http://http2.mlstatic.com/D_728476-MLU78878973712_092024-I.jpg',
-		thumbnails: [
-			'http://http2.mlstatic.com/D_728476-MLU78878973712_092024-I.jpg',
-			'http://http2.mlstatic.com/D_728476-MLU78878973712_092024-I.jpg',
-			'http://http2.mlstatic.com/D_728476-MLU78878973712_092024-I.jpg',
-		],
+	const { id } = useParams(); // Obtener el ID de la URL
+	const navigate = useNavigate();
+	const [product, setProduct] = useState(null);
+	const [description, setDescription] = useState(null);
+	const [category, setCategory] = useState(null);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
+
+	// Efecto para cargar los datos cuando cambie el ID
+	useEffect(() => {
+		// Función para obtener los datos del producto
+		const fetchProductData = async () => {
+			try {
+				setLoading(true);
+				setError(null);
+
+				// Hacer las peticiones en paralelo
+				const [productResponse, descriptionResponse, categoryResponse] =
+					await Promise.allSettled([
+						fetch(`http://localhost:3001/api/item/${id}`),
+						fetch(`http://localhost:3001/api/item/${id}/description`),
+						fetch(`http://localhost:3001/api/item/${id}/category`),
+					]);
+
+				// Procesar respuesta del producto
+				if (productResponse.status === 'fulfilled' && productResponse.value.ok) {
+					const productData = await productResponse.value.json();
+					setProduct(productData);
+				} else {
+					// Mostrar un mensaje de error
+					throw new Error('No se pudo obtener la información del producto');
+				}
+
+				// Procesar respuesta de la descripción
+				if (
+					descriptionResponse.status === 'fulfilled' &&
+					descriptionResponse.value.ok
+				) {
+					const descriptionData = await descriptionResponse.value.json();
+					setDescription(descriptionData);
+				}
+
+				// Procesar respuesta de la categoría
+				if (categoryResponse.status === 'fulfilled' && categoryResponse.value.ok) {
+					const categoryData = await categoryResponse.value.json();
+					setCategory(categoryData);
+				}
+			} catch (error) {
+				console.error('Error obteniendo datos del producto:', error);
+				setError(error.message);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		if (id) {
+			fetchProductData();
+		}
+	}, [id]);
+
+	// Función para navegar de vuelta al listado
+	const handleBackToList = () => {
+		// Obtener la búsqueda anterior del localStorage
+		const lastSearch = localStorage.getItem('lastSearch') || '';
+		const lastSearchPath = lastSearch
+			? `/items?search=${encodeURIComponent(lastSearch)}`
+			: '/items';
+		navigate(lastSearchPath);
 	};
-	const description = {
-		text: '',
-		plain_text:
-			'iPhone 16 Pro Max. \n\nImponente diseño de titanio. Control de la Cámara. 4K Dolby Vision a 120 cps. Y el chip A18 Pro.\n\n• IMPONENTE DISEÑO DE TITANIO — El iPhone 16 Pro tiene un diseño de titanio resistente y ligero con una pantalla Super Retina XDR más grande, de 6.3 pulgadas.¹ Es increíblemente duradero gracias al Ceramic Shield de última generación, que es dos veces más resistente que cualquier vidrio de smartphone.\n\n• CONTROL DE LA CÁMARA — Con esta nueva funcionalidad podrás acceder fácilmente a las herramientas de la cámara, como el zoom o la profundidad de campo, para que no se te escape ni un momento.\n\n• CAPTURAS SOÑADAS — La cámara Fusion de 48 MP te permite grabar en 4K Dolby Vision a 120 cps para llevar tus videos a otro nivel. Y con la cámara ultra gran angular de 48 MP, tus fotos macro y panorámicas van a tener un nivel de detalle sorprendente.\n\n• ESTILOS FOTOGRÁFICOS — La nueva generación de Estilos Fotográficos te da más libertad creativa para que cada foto tenga tu toque personal. Y gracias a los avances en nuestro procesamiento de imágenes, ahora puedes revertir cualquier estilo en cualquier momento.\n\n• LA POTENCIA DEL CHIP A18 PRO — Este chip es el genio detrás de Apple Intelligence, gracias a su Neural Engine más rápido, su CPU y su GPU mejorados, y un gran salto en el ancho de banda de memoria. También te permite disfrutar funcionalidades avanzadas de foto y video, y juegos AAA.\n\n• UN SALTO ENORME EN BATERÍA — El iPhone 16 Pro es tan potente y eficiente que puede ofrecerte hasta 33 horas de reproducción de video.² Acopla un cargador MagSafe para obtener una carga inalámbrica más rápida o carga a través de la entrada USB-C.³\n\n• PERSONALIZA TU IPHONE — Con iOS 18 puedes cambiar el color de los íconos de la pantalla de inicio a tu gusto. Encuentra tus tomas favoritas en un flash en la rediseñada app Fotos. Y agrega divertidos efectos animados a cualquier palabra, frase o emoji en iMessage.\n\n• FUNCIONALIDADES ESENCIALES DE SEGURIDAD — Con Detección de Choques, el iPhone puede detectar si sufres un accidente grave de auto y pedir ayuda cuando tú no puedes. \n\nAviso legal\n1 Las pantallas tienen las esquinas redondeadas. Si se mide en forma de rectangulo, la pantalla tiene 6.12 pulgadas (iPhone 16), 6.69 pulgadas (iPhone 16 Plus), 6.27 pulgadas (iPhone 16 Pro) o 6.86 pulgadas (iPhone 16 Pro Max) en diagonal. El area real de visualizacion es menor.\t\t\t\t\t\t\t\n2 La duracion de la bateria varia segun el uso y la configuracion. Para obtener mas informacion, visita apple.com/la/batteries/. \t\t\t\t\t\t\t\n3 Los accesorios se venden por separado.\t\t\t\t\t\n4 Algunas funcionalidades podrian no estar disponibles en todos los paises o areas.\t\t\t\t\t\n5 El iPhone 16 y el iPhone 16 Pro pueden detectar si sufres un accidente de auto grave y pedir ayuda. Requiere conexion celular o llamadas por Wi-Fi.',
-		last_updated: '2025-01-30T18:27:12.056Z',
-		date_created: '2025-01-30T18:27:12.056Z',
-		snapshot: {
-			url: 'http://descriptions.mlstatic.com/D-MLA2005705454.jpg?hash=8520c3b8559cb08aa7e782b8f5334ffe_0x0',
-			width: 0,
-			height: 0,
-			status: '',
-		},
-	};
+
+	// Mostrar loading
+	if (loading) {
+		return (
+			<div className='product-detail container'>
+				<div className='product-detail__loading'>
+					<p>Cargando producto...</p>
+				</div>
+			</div>
+		);
+	}
+
+	// Mostrar error
+	if (error) {
+		return (
+			<div className='product-detail container'>
+				<div className='product-detail__error'>
+					<p>Error: {error}</p>
+					<button onClick={handleBackToList}>Volver al listado</button>
+				</div>
+			</div>
+		);
+	}
+
+	// Mostrar mensaje si no hay producto
+	if (!product) {
+		return (
+			<div className='product-detail container'>
+				<div className='product-detail__not-found'>
+					<p>Producto no encontrado</p>
+					<button onClick={handleBackToList}>Volver al listado</button>
+				</div>
+			</div>
+		);
+	}
+
+	// Calcular cuotas (ejemplo: 9 cuotas sin interés)
+	const installmentAmount = product.price ? Math.round(product.price / 9) : 0;
+
+	// Obtener la primera imagen como imagen principal
+	const mainImage =
+		product.pictures && product.pictures.length > 0
+			? product.pictures[0].secure_url || product.pictures[0].url
+			: product.thumbnail;
+
+	// Obtener todas las imágenes para la galería
+	const thumbnails =
+		product.pictures && product.pictures.length > 0
+			? product.pictures.map((pic) => pic.secure_url || pic.url)
+			: [product.thumbnail];
 
 	return (
 		<div className='product-detail container'>
 			{/* Navegación superior */}
 			<div className='product-detail__breadcrumb'>
 				<div className='product-detail__breadcrumb-navigation'>
-					<a href='/'>Volver al listado</a>
+					<button
+						onClick={handleBackToList}
+						className='product-detail__breadcrumb-back'
+					>
+						Volver al listado
+					</button>
 					<span>|</span>
-					<span>Celulares y Teléfonos</span> &gt;
-					<span>Celulares y Smartphones</span> &gt;
-					<span>Apple iPhone</span>
+					{category &&
+						category.path_from_root &&
+						category.path_from_root.map((cat, index) => (
+							<span key={cat.id}>
+								{cat.name}
+								{index < category.path_from_root.length - 1 && ' > '}
+							</span>
+						))}
 				</div>
 				<div>
 					<span className='product-detail__breadcrumb-id'>
-						Publicacion:{' '}
+						Publicación:{' '}
 						<span className='product-detail__breadcrumb-id-value'>
-							# 1117020690
+							# {product.id}
 						</span>
 					</span>
 				</div>
@@ -52,7 +156,7 @@ const Detail = () => {
 			<div className='product-detail__main'>
 				{/* Galería de imágenes */}
 				<aside className='product-detail__gallery'>
-					{product.thumbnails.map((img, i) => (
+					{thumbnails.map((img, i) => (
 						<img
 							key={i}
 							className='product-detail__thumbnail'
@@ -64,45 +168,75 @@ const Detail = () => {
 
 				{/* Imagen principal */}
 				<div className='product-detail__image'>
-					<img src={product.mainImage} alt={product.title} />
+					<img src={mainImage} alt={product.title} />
 				</div>
 
 				{/* Información del producto */}
 				<div className='product-detail__info'>
-					<p className='product-detail__status'>Nuevo | +100 vendidos</p>
+					<p className='product-detail__info-status'>
+						{product.condition === 'new' ? 'Nuevo' : 'Usado'} |
+						{product.initial_quantity
+							? ` ${product.initial_quantity} disponibles`
+							: ''}
+					</p>
 
 					<h1 className='product-detail__title'>{product.title}</h1>
 
-					<p className='product-detail__seller'>Por {product.seller}</p>
+					<p className='product-detail__seller'>
+						Por{' '}
+						{product.official_store_name || product.seller?.nickname || 'Vendedor'}
+					</p>
 
 					<div className='product-detail__price'>
+						{product.original_price && product.original_price > product.price && (
+							<p className='product-detail__price-original'>
+								${product.original_price}
+							</p>
+						)}
 						<p className='product-detail__price-value'>${product.price}</p>
 
-						<p className='product-detail__price-installments'>
-							Mismo precio en 9 cuotas de ${product.installment}
-						</p>
+						{product.price && (
+							<p className='product-detail__price-installments'>
+								Mismo precio en 9 cuotas de ${installmentAmount}
+							</p>
+						)}
 					</div>
-					<p className='product-detail__shipping'>Envío gratis</p>
 
-					<p className='product-detail__color'>
-						Color:{' '}
-						<strong className='product-detail__color-value'>
-							{product.color}
-						</strong>
-					</p>
+					{product.shipping?.free_shipping && (
+						<p className='product-detail__shipping'>Envío gratis</p>
+					)}
+
+					{/* Mostrar atributos relevantes */}
+					{product.attributes && (
+						<div className='product-detail__attributes'>
+							{product.attributes
+								.filter((attr) =>
+									['COLOR', 'BRAND', 'MODEL'].includes(attr.id),
+								)
+								.map((attr) => (
+									<p key={attr.id} className='product-detail__attribute'>
+										{attr.name}: <strong>{attr.value_name}</strong>
+									</p>
+								))}
+						</div>
+					)}
 				</div>
 			</div>
 
 			{/* Descripción */}
-			<section className='product-detail__description'>
-				<div className='product-detail__description-separator' />
-				<div className='product-detail__description-content'>
-					<h2 className='product-detail__description-title'>Descripción</h2>
-					<p className='product-detail__description-text'>
-						{description.plain_text}
-					</p>
-				</div>
-			</section>
+			{description && (
+				<section className='product-detail__description'>
+					<div className='product-detail__description-separator' />
+					<div className='product-detail__description-content'>
+						<h2 className='product-detail__description-title'>Descripción</h2>
+						<p className='product-detail__description-text'>
+							{description.plain_text ||
+								description.text ||
+								'Sin descripción disponible'}
+						</p>
+					</div>
+				</section>
+			)}
 		</div>
 	);
 };

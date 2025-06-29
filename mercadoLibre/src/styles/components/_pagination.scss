@@ -2,70 +2,104 @@
 @use '../base/typography' as typography;
 
 .pagination {
-    display: flex;
-    justify-content: center;
-    padding: 24px 0;
-    background-color: variables.$background-pagination;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  
-    &__list {
-      display: flex;
-      gap: 2px;
-      list-style: none;
-      align-items: center;
-    }
-  
-    &__item {
-      width: 28px;
-      height: 28px;
-      padding: 4px;
-      border: 1px solid transparent;
-      border-radius: 4px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px 0;
+	margin-top: 20px;
+	background-color: variables.$background-pagination;
 
-      font-family: typography.$font-primary, sans-serif;
-      font-size: typography.$font-size-base;
-      font-weight: typography.$font-weight-regular;
-      color: variables.$color-pagination-text;
+	&__list {
+		display: flex;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		gap: 8px;
+		align-items: center;
+	}
 
-      text-align: center;
-  
-      display: flex;
-      align-items: center;
-      justify-content: center;
-  
-      transition: all 0.2s ease;
-  
-      &:hover {
-        border-color: variables.$color-pagination;
-      }
-  
-      &--active {
-        border-color: variables.$color-pagination;
-        background-color: variables.$background-pagination-active;
-      }
-    }
-  
-    &__next {
-      font-family: typography.$font-primary, sans-serif;
-      font-size: typography.$font-size-base;
-      font-weight: typography.$font-weight-regular;
-      color: variables.$color-pagination-text;
+	&__item {
+		font-family: typography.$font-primary, sans-serif;
+		font-size: typography.$font-size-base;
+		font-weight: typography.$font-weight-regular;
+		color: variables.$color-pagination-text;
+		cursor: pointer;
+		// border: 1px solid variables.$color-pagination-text;
+		border-radius: 4px;
+		height: 28px;
+		width: 28px;
 
-      cursor: pointer;
-      border: none;
-      background: none;
-      height: 28px;
-      padding: 0 8px;
-      display: flex;
-      align-items: center;
-  
-      &:hover {
-        text-decoration: underline;
-        color: variables.$color-pagination;
-      }
-    }
-  }
-  
+		padding-top: 4px;
+		padding-bottom: 4px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+
+		&--active {
+			// color: variables.$color-pagination;
+			font-weight: typography.$font-weight-bold;
+			border: 1px solid variables.$color-pagination;
+			font-weight: typography.$font-weight-semibold;
+			background: #ffffff;
+		}
+	}
+
+	&__next {
+		font-family: typography.$font-primary, sans-serif;
+		font-size: typography.$font-size-base;
+		font-weight: typography.$font-weight-regular;
+		color: variables.$color-pagination-text;
+		cursor: pointer;
+		border: none;
+		background: none;
+		height: 28px;
+		padding: 0 8px;
+		display: flex;
+		align-items: center;
+
+		&:hover {
+			text-decoration: none;
+			color: variables.$color-pagination;
+		}
+	}
+
+	// &__prev {
+	// 	font-family: typography.$font-primary, sans-serif;
+	// 	font-size: typography.$font-size-base;
+	// 	font-weight: typography.$font-weight-regular;
+	// 	color: variables.$color-pagination-text;
+	// 	cursor: pointer;
+	// 	border: none;
+	// 	background: none;
+	// 	height: 28px;
+	// 	padding: 0 8px;
+	// 	display: flex;
+	// 	align-items: center;
+
+	// 	&:hover {
+	// 		text-decoration: underline;
+	// 		color: variables.$color-pagination;
+	// 	}
+	// }
+
+	&__dots {
+		font-family: typography.$font-primary, sans-serif;
+		font-size: typography.$font-size-base;
+		color: variables.$color-pagination-text;
+		padding: 0 8px;
+	}
+
+	// &__info {
+	// 	text-align: center;
+	// 	margin-top: 1rem;
+	// 	font-family: typography.$font-primary, sans-serif;
+	// 	font-size: typography.$font-size-small;
+	// 	color: variables.$color-pagination-text;
+	// }
+
+	// &__loading {
+	// 	color: variables.$color-pagination;
+	// 	font-weight: typography.$font-weight-medium;
+	// }
+}

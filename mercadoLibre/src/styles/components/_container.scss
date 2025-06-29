@@ -1,0 +1,31 @@
+.container {
+	// ... existing styles ...
+
+	.loading,
+	.no-results {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: 200px;
+		text-align: center;
+		padding: 2rem;
+
+		p {
+			font-size: 1.1rem;
+			color: #666;
+			margin: 0;
+		}
+	}
+
+	.loading {
+		p {
+			color: #3483fa;
+		}
+	}
+
+	.no-results {
+		p {
+			color: #999;
+		}
+	}
+}

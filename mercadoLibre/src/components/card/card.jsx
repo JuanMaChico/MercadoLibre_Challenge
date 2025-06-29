@@ -1,6 +1,19 @@
+import { useNavigate } from 'react-router-dom';
+
 const Card = ({ item, onClick }) => {
+	const navigate = useNavigate();
+
+	const handleCardClick = () => {
+		if (onClick) {
+			onClick(item);
+		} else {
+			// Navegar al detalle del producto
+			navigate(`/item/${item.id}`);
+		}
+	};
+
 	return (
-		<div className='card' onClick={onClick}>
+		<div className='card' onClick={handleCardClick}>
 			<div className='card__image-wrapper'>
 				<img className='card__image' src={item.thumbnail} alt={item.title} />
 			</div>
